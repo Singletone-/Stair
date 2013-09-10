@@ -19,6 +19,9 @@ from itertools import filterfalse
 from collections import deque
 from hashlib import sha256 as hash_alg_1
 
+lrange = lambda x: rangle(len(x))
+
+#debug
 class hash_alg:
     state = 0
     string = '' 
@@ -66,7 +69,7 @@ class WordGraph(dict):
 
         NB: It's not the same as __iter__
         """
-        for i in range(len(wrd)):
+        for i in lrange(wrd):
             for letter in self.alph:
                 #change one letter of word wrd at i-position
                 yield wrd[:i] + letter + wrd[i+1:] 
@@ -193,7 +196,7 @@ class DiffLenGraph(WordGraph):
 
         NB: It's not the same as __iter__
         """
-        for i in range(len(wrd)):
+        for i in lrange(wrd):
             yield wrd[:i] + wrd[i+1:]
             for letter in self.alph:
                 #change one letter of word wrd at i-position
@@ -201,7 +204,7 @@ class DiffLenGraph(WordGraph):
 
 
 def load_graph_from_file(graph, filename): 
-    """Загружаем  из файла словарь в граф похожих слов
+    """Загружаем из файла словарь в граф похож слов
 
     d.load_graph_from_file(filename-or-stream) -> None
     load_graph_from_file(graph, filename-or-stream) -> None
@@ -286,19 +289,16 @@ def main():
 
     try:
         while True:
-            beg = input(prompt1).lower().strip()
-            end = input(prompt2).lower().strip()
+            beg = input(prompt1).strip().lower()
+            end = input(prompt2).strip().lower()
 
             try:
                 print(' '.join(graph.search_path(beg, end)))
             except KeyError:
                 print(PATH_NOT_FOUND)
     except (KeyboardInterrupt, SystemExit, EOFError):
-        pass
-        """
         if args.save:
             graph.save_cache(dict_cache)
-        """
 
 if __name__ == '__main__':
         main()
